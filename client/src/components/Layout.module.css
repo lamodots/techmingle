@@ -1,0 +1,10 @@
+.main {
+    padding: 180px 64px;
+}
+
+@media only screen and (max-width:800px) {
+   .main {
+    padding: 180px 32px;
+    
+   }
+}

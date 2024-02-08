@@ -1,0 +1,18 @@
+.author_avater {
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+   display: flex;
+}
+.author_avater  img{
+    width: 100%;
+    height: 40px;
+    border-radius: 100%;
+   
+
+}
+a {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}

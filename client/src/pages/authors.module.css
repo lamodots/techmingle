@@ -1,0 +1,30 @@
+
+.authors_details_container {
+    display: grid;
+    grid-template-columns: repeat(4 , 1fr);
+    gap:32px;
+  
+}
+
+.author {
+    background-color: #fff;
+    display: flex;
+    padding: 16px;
+    gap: 16px;
+    border-radius: 8px;
+}
+.author_avatar {
+    width: 3rem;
+   height: 3rem;
+
+    border-radius: 50%;
+    overflow: hidden;
+    border: 0.3px solid #dddada;
+    
+}
+.author_avatar img {
+    width: 3rem;
+    height: 3rem;
+   border-radius: 50%;
+   
+}
