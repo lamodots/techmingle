@@ -68,9 +68,10 @@ header {
 
 .categories_list {
     padding: 16px 0;
-  
+ 
    
 }
+
 
 .categories_list  a {
     background-color: #181616;
@@ -78,6 +79,9 @@ header {
     border-radius: 8px;
     color: #f8f7f7;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    
 }
 
 

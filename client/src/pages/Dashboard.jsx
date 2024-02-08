@@ -46,18 +46,19 @@ function Dashboard() {
         <div className={styles.dashboard_container}>
           {
             posts.map( post => {
+              const shortTitle = post.title.length < 120 ? post.title : post.title.slice(0, 120) + " "+ "..."
               return(
                 <article key={post.id} className={styles.dashboard_post}>
                   <div className={styles.dasboard_post_info}>
                     <div className={styles.dashboard_post_thumbnail}>
                       <img src={post.thumbnail}/>
                     </div>
-                    <h5>{post.title}</h5>
+                    <h5>{shortTitle}</h5>
                   </div>
                   <div className={styles.dashboard_post_actions}>
                     <Link to={`/posts/${post.id}`}>View</Link>
-                    <Link to={`/posts/${post.id}/edit`}>Edit</Link>
-                    <Link to={`/posts/${post.id}/delete`}>Delete</Link>
+                    <Link to={`/posts/${post.id}/edit-post`}>Edit</Link>
+                    <Link to={`/posts/${post.id}/delete-post`}>Delete</Link>
                   </div>
                 </article>
               )

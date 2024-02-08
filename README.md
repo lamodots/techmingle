@@ -7,7 +7,8 @@ Techmingle is a dynamic  blog platform designed to revolutionize the blogging ex
     - React
     - Css module for styling
     - UI colors app for color generation
-    - Slide for swipping feature
+    - Splide for swipping feature
+    - ReactQuill
     - Mongodb 
     - Express
     - Nodejs

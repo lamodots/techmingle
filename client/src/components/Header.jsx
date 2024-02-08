@@ -56,28 +56,28 @@ function Header() {
   }
    className={styles.categories_list}
     >
-        <SplideSlide>
+        <SplideSlide className={styles.categories_list_item}>
            <Link to="/posts/categories/agriculture">Agriculture</Link>
         </SplideSlide>
-        <SplideSlide>
+        <SplideSlide className={styles.categories_list_item}>
            <Link to="/posts/categories/business">Business</Link>
         </SplideSlide>
-        <SplideSlide>
+        <SplideSlide className={styles.categories_list_item}>
           <Link to="/posts/categories/education">Education</Link>
         </SplideSlide>
-        <SplideSlide>
+        <SplideSlide className={styles.categories_list_item}>
            <Link to="/posts/categories/entertainment">Entertainment</Link>
         </SplideSlide>
-        <SplideSlide>
+        <SplideSlide className={styles.categories_list_item}>
            <Link to="/posts/categories/art">Art</Link>
         </SplideSlide>
-        <SplideSlide>
+        <SplideSlide className={styles.categories_list_item}>
           <Link to="/posts/categories/investment">Investment</Link>
         </SplideSlide>
-        <SplideSlide>
+        <SplideSlide className={styles.categories_list_item}>
            <Link to="/posts/categories/business">Uncategorized</Link>
         </SplideSlide>
-        <SplideSlide>
+        <SplideSlide className={styles.categories_list_item}>
           <Link to="/posts/categories/education">Weather</Link>
         </SplideSlide>
     </Splide>
