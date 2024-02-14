@@ -212,7 +212,7 @@ const deletePost = async (req, res, next) => {
                 const currentUser =  await User.findById(req.user.id)
                 const userPostCount = currentUser?.posts - 1;
                 await User.findByIdAndUpdate(req.user.id, {posts: userPostCount})
-                res.status(200).json(`Post ${id} deleted sucessfully! .`)
+                res.json(`Post ${id} deleted sucessfully! .`)
             }
     })
       }
