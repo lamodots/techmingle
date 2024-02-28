@@ -1,10 +1,38 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Header.module.css'
 import { Splide, SplideSlide} from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
+import { UserContext } from '../context/userContext';
+import { useRef} from 'react';
+
 
 function Header() {
+  /**I wont like to handle menu this way */
+  // const [isNavShowing, setIsNavShowing] = useState(window.innerWidth > 912 ? true: false)
+  const menuRef= useRef(null)
+  const { currentUser} = useContext(UserContext)
+ 
+  // console.log(currentUser.id)
+
+  /**I feel this is a terrible way to handle mneu */
+// const closeHandler = ()=> {
+//   if(window.innerWidth < 912){
+//     setIsNavShowing(false)
+//   }else {
+//     setIsNavShowing(true)
+//   }
+// }
+
+
+/**Using useRef is the solution i found */
+const handleToggleMenu = ()=> {
+
+ if(menuRef.current){
+  menuRef.current.classList.toggle(styles.toggle)
+ }
+}
+
   return (
    
 <header>
@@ -12,15 +40,25 @@ function Header() {
       <div className={styles.nav_logo}>
         <Link to="/" ><span>Tech</span> <span>Mingle</span></Link>
       </div>
-      <div className={styles.nav_menu}>
-        <ul>
-          <li><Link to="/user-profile/jjjiojiojoij">Lamodot Joe</Link></li>
-          <li><Link to="/create-post">Create Post</Link></li>
-          <li><Link to="/authors">Authors</Link></li>
-          <li><Link to="/logout">Logout</Link></li>
+      <div className={`${styles.nav_menu}`} ref={menuRef} >
+        {currentUser?.id && (
+          <ul>
+          <li  onClick={handleToggleMenu }><Link to="/user-profile/jjjiojiojoij" >Lamodot Joe</Link></li>
+          <li  onClick={handleToggleMenu }><Link to="/create-post">Create Post</Link></li>
+          <li  onClick={handleToggleMenu }><Link to="/authors" >Authors</Link></li>
+          <li  onClick={handleToggleMenu }><Link to="/logout">Logout</Link></li>
         </ul>
+        )}
+        {
+          !currentUser?.id && (
+            <ul>
+            <li  onClick={handleToggleMenu }><Link to="/authors" >Authors</Link></li>
+            <li  onClick={handleToggleMenu }><Link to="/login">Login</Link></li>
+          </ul>
+          )
+        }
       </div>
-      <button className={styles.toggle_Icon}>
+      <button className={styles.toggle_Icon}  onClick={handleToggleMenu }>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
       <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
   

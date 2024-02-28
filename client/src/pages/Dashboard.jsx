@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 import thumb1 from '../assets/thumb1.jpg'
 import styles from './dashboard.module.css'
 import { Link } from 'react-router-dom';
+import { UserContext } from '../context/userContext';
 
 const DUMMPY_POST = [
   {
@@ -39,6 +41,15 @@ const DUMMPY_POST = [
 ]
 function Dashboard() {
   const [posts, setPost] = useState(DUMMPY_POST)
+  const navigate = useNavigate()
+  const { currentUser } = useContext( UserContext)
+  const token = currentUser?.token;
+  useEffect(()=> {
+    if(!token){
+      navigate('/login')
+    }
+  },[])
+  
   return (
     <section className={styles.dashboard}>
       {

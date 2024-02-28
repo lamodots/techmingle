@@ -18,7 +18,7 @@ const errorHandler = (error, req, res, next) => {
     if(res.headersSent){
         return next(error)
     }
-    res.status(error.code || 500 ).json({mesage: error.message || "An unknown error occured !"})
+    res.status(error.code || 500 ).json({message: error.message || "An unknown error occured !"})
 }
 
 module.exports = { notFound, errorHandler}

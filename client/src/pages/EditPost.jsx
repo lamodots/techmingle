@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from './createpost.module.css'
+import { UserContext } from '../context/userContext'
+import {useNavigate}from 'react-router-dom'
 // import ReactQuill from 'react-quill';
 // import 'react-quill/dist/quill.snow.css';
 
@@ -8,6 +10,15 @@ function EditPost() {
   const [category, setCategory] =  useState('Uncategorized')
   const [description, setDescription] =  useState('')
   const [thumbnail, setThumbnail] =  useState('')
+  const navigate = useNavigate()
+  const { currentUser } = useContext( UserContext)
+  const token = currentUser?.token;
+  useEffect(()=> {
+    if(!token){
+      navigate('/login')
+    }
+  },[])
+  
 
   // const modules = {
   //   toolbar : [

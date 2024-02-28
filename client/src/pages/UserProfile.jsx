@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from './userprofile.module.css'
 import {Link } from 'react-router-dom'
 import avatarImage from '../assets/avatar.jpg'
 import {Upload, Check} from 'lucide-react'
+import { UserContext } from '../context/userContext'
+import {useNavigate} from 'react-router-dom'
 
 function UserProfile() {
   const [avatar, setAvatar] = useState()
@@ -11,6 +13,17 @@ function UserProfile() {
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
+
+  const navigate = useNavigate()
+  const { currentUser } = useContext( UserContext)
+  const token = currentUser?.token;
+  useEffect(()=> {
+    if(!token){
+      navigate('/login')
+    }
+  },[])
+  
+
   return (
     <section className={styles.profile}>
       <div className={styles.profile_container}>

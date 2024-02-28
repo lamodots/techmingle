@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 import styles from './createpost.module.css'
 
+import { UserContext } from '../context/userContext';
 
 
 function CreatePost() {
@@ -8,6 +10,19 @@ function CreatePost() {
   const [category, setCategory] =  useState('Uncategorized')
   const [description, setDescription] =  useState('')
   const [thumbnail, setThumbnail] =  useState('')
+
+  const navigate = useNavigate()
+  const { currentUser } = useContext( UserContext)
+  const token = currentUser?.token;
+  /**
+   * Redirect user to login page for any user who is not logged in.
+   */
+  useEffect(()=> {
+    if(!token){
+      navigate('/login')
+    }
+  },[])
+  
 
   const modules = {
     toolbar : [
@@ -46,5 +61,6 @@ function CreatePost() {
     </section>
   )
 }
+
 
 export default CreatePost

@@ -37,7 +37,7 @@ const registerUser = async (req, res, next)=> {
 
 const salt = await bcrypt.genSalt(10)
 const hashedPassword = await bcrypt.hash(password, salt)
-const newUser = await User.create({name, email: newEmail, password: hashedPassword})
+const newUser = await User.create({name: name, email: newEmail, password: hashedPassword})
 res.status(201).json(`New user ${newUser.email} registered.`)
 
    }catch(error){

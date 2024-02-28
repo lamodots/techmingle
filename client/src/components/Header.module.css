@@ -92,6 +92,30 @@ header {
     }
     .nav_menu {
         display: none;
+      
+    }
+    .toggle {
+        display: flex;
+        position: absolute;
+        width: 100%;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        width: 100%;
+      
+        flex-direction: column;
+        padding: 16px;
+        background-color: #fff;
+        left: 50%;
+        transform: translate(-50%, 0);
+        z-index: 100;
+
+    }
+    .nav_menu ul {
+        display: flex;
+        flex-direction: column;
+        list-style-type: none;
+        gap: 24px;
     }
     .toggle_Icon {
         display: block;
