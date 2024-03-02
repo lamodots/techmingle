@@ -26,6 +26,8 @@ function PostAuthor({authorId ,createdAt}) {
     }
     getAuthor()
   }, [])
+
+ 
   return (
     <Link to={`/posts/users/${authorId}`}>
         <div className={styles.author_avater}>

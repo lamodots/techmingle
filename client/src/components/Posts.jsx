@@ -1,5 +1,5 @@
 import React, { useEffect, useState, CSSProperties} from 'react'
-import thumb1 from '../assets/thumb1.jpg'
+
 import PostItem from './PostItem'
 import styles from './posts.module.css';
 import HashLoader from 'react-spinners/HashLoader'
@@ -11,7 +11,7 @@ const override = {
    
   };
 function Posts() {
-    const [error, setError] = useState("")
+   
     const [posts , setPosts]= useState([])
     const [isLoading, setIsLoading] = useState(false)
  
@@ -20,7 +20,7 @@ function Posts() {
             setIsLoading(true)
             try {
                 const response = await axios.get('http://localhost:5000/api/posts')
-                console.log(response.data)
+                
                 setPosts(response?.data)
             } catch (err) {
                 console.log(err)

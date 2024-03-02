@@ -1,33 +1,84 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PostAuthor from '../components/PostAuthor'
 import { Link } from 'react-router-dom';
 import styles from './postdetails.module.css';
-import thumbnail from '../assets/thumb1.jpg'
+
+import { useParams } from 'react-router-dom';
+import axios from 'axios'
+import HashLoader from 'react-spinners/HashLoader'
+import { UserContext } from '../context/userContext';
+
+const override = {
+  display: "block",
+  margin: "0 auto",
+ 
+};
+
 
 function PostDetail() {
+  const {id} = useParams()
+  const [error, setError] = useState(null)
+const [post, setPost] = useState(null)
+const [isLoading, setIsLoading] = useState(false)
+
+
+console.log(id)
+
+
+const { currentUser} = useContext(UserContext)
+
+useEffect(()=>{
+
+  const getSinglePost = async ()=> {
+    setIsLoading(true)
+    try {
+      const response = await axios.get(`http://localhost:5000/api/posts/${id}`)
+      setPost(response.data)
+     
+    } catch (err) {
+      setError(err)
+      
+    }
+
+    setIsLoading(false)
+}
+
+getSinglePost()
+},[id])
+
+if(isLoading){
+  return <HashLoader color='#ff3333' cssOverride={override} />
+}
   return (
     <section className={styles.details_wrapper}>
+      {error && <p>{error}</p>}
       <div className={styles.details_page_container}>
           
       {/* start */}
 
-      <div className={styles.post_detail_container}>
+      {
+        post && (
+          <div className={styles.post_detail_container}>
         <div className={styles.post_details_header}>
           <PostAuthor />
-          <div className={styles.post_details_action}>
-            <Link to={`/posts/sssssnj89u9/edit`} >Edit</Link>
-            <Link to={`/posts/sssssnj89u9/delete`}>Delete</Link>
-          </div>
+         {currentUser?.id === post?.creator && (
+             <div className={styles.post_details_action}>
+             <Link to={`/posts/${id}/edit`} >Edit</Link>
+             <Link to={`/posts/${id}/delete-post`}>Delete</Link>
+           </div>
+         )}
           
         </div>
-        <h1>Similique, dolorum mollitia. Ex molestiae voluptatibus explicabo </h1>
+        <h1>{post.title}</h1>
         <div className={styles.post_details_thumnail}>
-          <img src={thumbnail} alt='' />
+          <img src={`http://localhost:5000/uploads/${post?.thumbnail}`} alt='' />
         </div>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, dolorum mollitia. Ex molestiae voluptatibus explicabo saepe porro aperiam molestias quidem. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam consectetur ullam enim dolorem aliquam sint, corporis cum necessitatibus modi, quisquam iusto repellendus a, non repellat cumque dolore laboriosam distinctio facere. Doloremque, est. Accusantium nesciunt quis eos error quod repellat, blanditiis odio suscipit consectetur, exercitationem nam consequuntur. Harum, temporibus aperiam voluptatibus iste ducimus nesciunt officiis veniam voluptates maiores doloremque eum, minus repellendus recusandae libero repudiandae placeat at unde aliquam adipisci neque qui repellat. Obcaecati porro, voluptatum suscipit eveniet quas ex alias.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, dolorum mollitia. Ex molestiae voluptatibus explicabo saepe porro aperiam molestias quidem. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam consectetur ullam enim dolorem aliquam sint, corporis cum necessitatibus modi, quisquam iusto repellendus a, non repellat cumque dolore laboriosam distinctio facere. Doloremque, est. Accusantium nesciunt quis eos error quod repellat, blanditiis odio suscipit consectetur, exercitationem nam consequuntur. Harum, temporibus aperiam voluptatibus iste ducimus nesciunt officiis veniam voluptates maiores doloremque eum, minus repellendus recusandae libero repudiandae placeat at unde aliquam adipisci neque qui repellat. Obcaecati porro, voluptatum suscipit eveniet quas ex alias.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, dolorum mollitia. Ex molestiae voluptatibus explicabo saepe porro aperiam molestias quidem. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam consectetur ullam enim dolorem aliquam sint, corporis cum necessitatibus modi, quisquam iusto repellendus a, non repellat cumque dolore laboriosam distinctio facere. Doloremque, est. Accusantium nesciunt quis eos error quod repellat, blanditiis odio suscipit consectetur, exercitationem nam consequuntur. Harum, temporibus aperiam voluptatibus iste ducimus nesciunt officiis veniam voluptates maiores doloremque eum, minus repellendus recusandae libero repudiandae placeat at unde aliquam adipisci neque qui repellat. Obcaecati porro, voluptatum suscipit eveniet quas ex alias.</p>
+        
+        {/* To make the editor we are using work */}
+        <p dangerouslySetInnerHTML={{__html:post.description}} />
       </div>
+        )
+      }
       <aside className={styles.details_page_sidebar}>
         <div className={styles.aside_header}>
           <form>
@@ -49,8 +100,8 @@ function PostDetail() {
           <Link to="/posts/categories/education">Education</Link>
           <Link to="/posts/categories/entertainment">Entertainment</Link>
           <Link to="/posts/categories/investment">Investment</Link>
-          <Link to="/posts/categories/education">Weather</Link>
-          <Link to="/posts/categories/business">Uncategorized</Link>
+          <Link to="/posts/categories/weather">Weather</Link>
+          <Link to="/posts/categories/uncategorized">Uncategorized</Link>
         </div>
       </aside>
 

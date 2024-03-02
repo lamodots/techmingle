@@ -32,7 +32,8 @@ const createPost = async (req, res, next) => {
             if(err){
                 return next(new AppError(err))
             }else {
-                const newPost =  await Post.create({title, category, description, thumbnail: newFilename, creator:req.user.id})
+                const cat = category.toLowerCase()
+                const newPost =  await Post.create({title, category:cat, description, thumbnail: newFilename, creator:req.user.id})
                 if(!newPost){
                     return next(new AppError("Post couldn't be created.", 422))
                 }

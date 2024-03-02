@@ -12,10 +12,13 @@
   "dependencies": {
     "@splidejs/react-splide": "^0.7.12",
     "axios": "^1.6.7",
+    "dompurify": "^3.0.9",
     "javascript-time-ago": "^2.5.9",
     "lucide-react": "^0.323.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-html-parser": "^2.0.2",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^6.22.0",
     "react-spinners": "^0.13.8",
     "react-time-ago": "^7.3.1"

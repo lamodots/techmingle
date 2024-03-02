@@ -43,7 +43,7 @@ const handleToggleMenu = ()=> {
       <div className={`${styles.nav_menu}`} ref={menuRef} >
         {currentUser?.id && (
           <ul>
-          <li  onClick={handleToggleMenu }><Link to="/user-profile/jjjiojiojoij" >Lamodot Joe</Link></li>
+          <li  onClick={handleToggleMenu }><Link to={`/user-profile/${currentUser?.id}`} >{currentUser?.name}</Link></li>
           <li  onClick={handleToggleMenu }><Link to="/create-post">Create Post</Link></li>
           <li  onClick={handleToggleMenu }><Link to="/authors" >Authors</Link></li>
           <li  onClick={handleToggleMenu }><Link to="/logout">Logout</Link></li>
@@ -116,7 +116,7 @@ const handleToggleMenu = ()=> {
            <Link to="/posts/categories/business">Uncategorized</Link>
         </SplideSlide>
         <SplideSlide className={styles.categories_list_item}>
-          <Link to="/posts/categories/education">Weather</Link>
+          <Link to="/posts/categories/weather">Weather</Link>
         </SplideSlide>
     </Splide>
     </div>

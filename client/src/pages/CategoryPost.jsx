@@ -1,46 +1,43 @@
 import React from 'react';
 import thumb1 from '../assets/thumb1.jpg';
 import PostItem from '../components/PostItem';
-import { useState } from 'react';
+
 import styles from './categorypost.module.css'
-const DUMMPY_POST = [
-  {
-      id:1,
-      thumbnail: thumb1,
-      category: 'education',
-      title:'Contrary to popular belief, Lorem Ipsum is not simply random text.',
-      description: 'lorem lorem lorm lorem loej leoem leoe In version 9 thumbs.swiper parameter also accepts CSS Selector of the thumbs swiper. So to make both with Swiper elements we can use the following:',
-      authorId: 3
-  },
-  {
-      id:2,
-      thumbnail: thumb1,
-      category: 'art',
-      title:' There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don"t look even slightly believable.',
-      description: 'lorem lorem lorm lorem loej leoem leoe In version 9 thumbs.swiper parameter also accepts CSS Selector of the thumbs swiper. So to make both with Swiper elements we can use the following:',
-      authorId: 3
-  },
-  {
-      id:3,
-      thumbnail: thumb1,
-      category: 'entertainment',
-      title:' Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-      description:  ' In version 9 thumbs.swiper parameter also accepts CSS Selector of the thumbs swiper. So to make both with Swiper elements we can use the following: lorem lorem lorm lorem loej leoem leoe',
-      authorId: 3
-  },
-  {
-      id:4,
-      thumbnail: thumb1,
-      category: 'weather',
-      title:'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ',
-      description: ' In version 9 thumbs.swiper parameter also accepts CSS Selector of the thumbs swiper. So to make both with Swiper elements we can use the following: lorem lorem lorm lorem loej leoem leoe',
-      authorId: 3
-  }
-]
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import HashLoader from 'react-spinners/HashLoader'
+import axios from 'axios'
+
+
+const override = {
+  display: "block",
+  margin: "0 auto",
+ 
+};
 
 function CategoryPost() {
-  const [error, setError] = useState("")
-  const [posts , setPosts]= useState(DUMMPY_POST)
+  const [posts , setPosts]= useState([])
+  const [isLoading, setIsLoading] = useState(false)
+const {category } = useParams()
+
+  useEffect(()=> {
+      const getPost = async ()=> {
+          setIsLoading(true)
+          try {
+              const response = await axios.get(`http://localhost:5000/api/posts/categories/${category}`)
+            
+              setPosts(response?.data)
+          } catch (err) {
+              console.log(err)
+          }
+          setIsLoading(false)
+      }
+      getPost()
+  },[category])
+
+  if(isLoading){
+      return <HashLoader color='#ff3333' cssOverride={override} />
+  }
 
 return (
   <section className='author_post'>

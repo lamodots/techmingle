@@ -3,6 +3,10 @@ import {useNavigate} from 'react-router-dom'
 import styles from './createpost.module.css'
 
 import { UserContext } from '../context/userContext';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import axios from 'axios'
+import ClipLoader from 'react-spinners/ClipLoader'
 
 
 function CreatePost() {
@@ -10,6 +14,8 @@ function CreatePost() {
   const [category, setCategory] =  useState('Uncategorized')
   const [description, setDescription] =  useState('')
   const [thumbnail, setThumbnail] =  useState('')
+  const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useNavigate()
   const { currentUser } = useContext( UserContext)
@@ -37,22 +43,52 @@ function CreatePost() {
     "header", "bold", "italic","underline", "strike",  "blockquote","list", "bullet", "indent","link", "image", "video"
   ]
   const POST_CATEGORIES = ["Agriculture", "Business", "Education", "Entertainment", "Art", "Investment", "Uncategorized", "Weather"]
+
+
+
+  const createPost = async (e) => {
+      e.preventDefault();
+      const postData = new FormData();
+      postData.set('title', title)
+      postData.set('category', category)
+      postData.set('description', description)
+      postData.set('thumbnail', thumbnail)
+
+      try {
+        setIsLoading(true)
+        const response = await axios.post(`http://localhost:5000/api/posts`, postData, {
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${token}`}
+         
+        })
+
+        if(response.status == 201){
+          return navigate('/')
+        }
+
+      } catch (err) {
+        setError(err.response.data.message)
+      }
+
+      setIsLoading(false)
+  }
+
   return (
     <section className={styles.create_post}>
       <div className={styles.create_post_container}>
         <h2>Create Post</h2>
-        <p>This is an errror message</p>
-        <form className={styles.create_post_form} >
+        {error && <p>{error}</p>}
+        <form className={styles.create_post_form} onSubmit={createPost} >
           <input type='text' placeholder='Title' value={title} onChange={(e)=> setTitle(e.target.value)} autoFocus />
           <select name='category' value={category} onChange={(e)=> setCategory(e.target.value)}>
               {
-                POST_CATEGORIES.map(category => <option key={category}>{category}</option>)
+                POST_CATEGORIES.map(category => <option value={category.toLowerCase()} key={category}>{category}</option>)
               }
           </select>
 
-
+          <ReactQuill theme="snow"   value={description} onChange={setDescription}  className={styles.ql_editor} />;
           <input type="file"  onChange={(e)=> setThumbnail(e.target.files[0])} accept='png, jpg, jpeg' />
-          <button type='submit'>CREATE</button>
+          <button type='submit' className={styles.cratePostbtn}>{isLoading && <ClipLoader  color="#36d7b7" size={24} />}CREATE</button>
 
         </form>
 
